@@ -55,7 +55,16 @@ for category_no in range(start_category,len(category_URL)):
             download_page = requests.get(url)
             download_page_soup = BeautifulSoup(download_page.content, 'html.parser')
             raw_download_link = download_page_soup.findAll('div', attrs={'class': 'entry-content'})
-            download_link = raw_download_link[0].find('a').attrs['href']
-            # print(download_link)
-            download(download_link, download_path)                       # Downloading the files
+            download_links = raw_download_link[0].find_all('a')
+
+            if len(download_links) == 0:
+                print("No links found on page:", url)
+
+            for download_link in download_links:
+                download_link = download_link.attrs['href']
+
+                if download_link.startswith('http://download.ps3-themes.com/'):
+                    download(download_link, download_path)                       # Downloading the files
+                else:
+                    print("Not a valid download link:", download_link)
     conf.update_pageno(1)
