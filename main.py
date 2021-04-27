@@ -32,9 +32,9 @@ for category_no in range(start_category,len(category_URL)):
 
     dir_name = category.split('/')[-1]
     print('Category:', dir_name)
-    download_path = os.path.join(download_path, dir_name)
+    category_path = os.path.join(download_path, dir_name)
 
-    os.makedirs(download_path, exist_ok=True)
+    os.makedirs(category_path, exist_ok=True)
 
     soup = BeautifulSoup(main_page.content, 'html.parser')
     total_pages = soup.find_all('a', attrs={'class': 'page-numbers'})
@@ -64,7 +64,7 @@ for category_no in range(start_category,len(category_URL)):
                 download_link = download_link.attrs['href']
 
                 if download_link.startswith('http://download.ps3-themes.com/'):
-                    download(download_link, download_path)                       # Downloading the files
+                    download(download_link, category_path)                       # Downloading the files
                 else:
                     print("Not a valid download link:", download_link)
     conf.update_pageno(1)
